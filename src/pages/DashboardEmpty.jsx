@@ -31,7 +31,7 @@ export default function DashboardEmpty() {
   }, [dispatch]);
 
   return (
-    <div data-cy="activity-empty-state" className="flex">
+    <div className="flex">
       {/* activity-title */}
       <p data-cy="activity-title" className="absolute w-[145px] h-[54px] left-[220px] top-[148px] font-poppins not-italic font-bold text-[36px] leading-10 text-primary-black">
         Activity
@@ -56,7 +56,7 @@ export default function DashboardEmpty() {
           <button data-cy="activity-add-button" className="absolute bg-primary-500 w-[159px] h-[54px] left-[1061px] top-[154px] rounded-full">
             <div className="flex justify-evenly items-center">
               <img className="w-[24px] h-[24px]" src={iconPlus} alt="icon-plus" />
-              <p data-cy="activity-add-button" className="font-poppins text-white not-italic font-semibold text-lg" onClick={handleCreateActivity}>
+              <p className="font-poppins text-white not-italic font-semibold text-lg" onClick={handleCreateActivity}>
                 Tambah
               </p>
             </div>
@@ -64,9 +64,9 @@ export default function DashboardEmpty() {
         </div>
       )}
 
-      <div className="flex mt-[170px] z-10">
+      <div data-cy="activity-empty-state" className="flex mt-[170px] z-10">
         {lists.map((todo, idx) => (
-          <ul key={idx}>
+          <ul data="activity-item-0" key={idx}>
             <li>id: {todo.id}</li>
             <li data-cy="activity-item-title">title: {todo.title}</li>
             <li data-cy="activity-item-date">created: {todo.created_at}</li>
