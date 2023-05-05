@@ -11,7 +11,7 @@ import { useTheme } from "@mui/material/styles";
 import iconDelete from "../assets/images/icon-delete.svg";
 import iconAlert from "../assets/images/icon-alert.svg";
 
-export default function DeleteActivity({ id, onDelete }) {
+export default function DeleteActivity({ id, onDelete, title }) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -39,13 +39,15 @@ export default function DeleteActivity({ id, onDelete }) {
           <img src={iconAlert} alt="alert" />
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>Apakah anda yakin menghapus activity Meeting dengan client?</DialogContentText>
+          <DialogContentText data-cy="modal-delete-title">
+            Apakah anda yakin menghapus <i>{title}</i>?
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button data-cy="modal-delete-cancel-button" autoFocus onClick={handleClose}>
             Batal
           </Button>
-          <Button onClick={handleDelete} autoFocus data-cy="activity-item-delete-button">
+          <Button data-cy="modal-delete-confirm-button" onClick={handleDelete} autoFocus>
             Hapus
           </Button>
         </DialogActions>

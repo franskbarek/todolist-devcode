@@ -75,7 +75,7 @@ export default function DashboardEmpty() {
                   {format(new Date(activity.created_at), "EEEE, dd MMMM yyyy", { locale: id })}
                 </span>
                 {/* Modal box delete confirm */}
-                <DeleteActivity id={activity.id} onDelete={handleDeleteActivity} data-cy="activity-item-delete-button" />
+                <DeleteActivity id={activity.id} title={activity.title} onDelete={handleDeleteActivity} />
               </div>
             </div>
           </div>
