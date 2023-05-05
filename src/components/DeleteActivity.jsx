@@ -30,13 +30,13 @@ export default function DeleteActivity({ id, onDelete, title }) {
   };
 
   return (
-    <div>
+    <div data-cy="todo-modal-delete">
       <Button variant="outlined" onClick={handleClickOpen}>
         <img src={iconDelete} alt="delete" className="cursor-pointer" />
       </Button>
       <Dialog fullScreen={fullScreen} open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title">
         <DialogTitle id="responsive-dialog-title">
-          <img src={iconAlert} alt="alert" />
+          <img src={iconAlert} alt="alert" data-cy="modal-delete-icon" />
         </DialogTitle>
         <DialogContent>
           <DialogContentText data-cy="modal-delete-title">

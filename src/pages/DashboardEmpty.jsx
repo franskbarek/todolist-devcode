@@ -38,7 +38,7 @@ export default function DashboardEmpty() {
       {/* activity-title */}
       <p className="absolute w-[145px] h-[54px] left-[268px] top-[148px] font-poppins font-bold text-[36px] leading-10 text-primary-black mx-auto text-center">Activity</p>
       {/* activity-empty-state */}
-      {!lists.length ? <img data-cy="activity-empty-state" className="absolute w-1/8 left-[337px] top-[255px] z-10" src={bannerEmptyActivity} alt="empty" /> : null}
+      {!lists.length ? <img data-cy="activity-empty-state" className="absolute w-1/8 left-[337px] top-[255px] z-10" src={bannerEmptyActivity} alt="banner" /> : <div data-cy="activity-item"></div>}
       {/* start activity-add-button */}
       {addLoading ? (
         <div className="flex flex-row justify-center items-center pt-[13px] pr-[21px] pb-[13px] pl-[14px] gap-1.5">
@@ -65,8 +65,8 @@ export default function DashboardEmpty() {
       {/* start MUI box group activity */}
       <div className="flex justify-center items-center flex-wrap mx-auto w-5/6 mt-[150px]">
         {lists.map((activity, idx) => (
-          <div data-cy="activity-item" key={idx} className="flex justify-center pt-0 pr-2 pb-0 pl-3">
-            <div className="h-[258px] w-[254px] bg-white rounded-xl shadow-2xl px-8 py-10 mb-8 relative">
+          <div key={idx} className="flex justify-center pt-0 pr-2 pb-0 pl-3">
+            <div data-cy="activity-item" className="h-[258px] w-[254px] bg-white rounded-xl shadow-2xl px-8 py-10 mb-8 relative">
               <h4 data-cy="activity-title" className="text-md font-bold">
                 {activity.title}
               </h4>
@@ -75,7 +75,7 @@ export default function DashboardEmpty() {
                   {format(new Date(activity.created_at), "EEEE, dd MMMM yyyy", { locale: id })}
                 </span>
                 {/* Modal box delete confirm */}
-                <DeleteActivity id={activity.id} title={activity.title} onDelete={handleDeleteActivity} />
+                <DeleteActivity id={activity.id} title={activity.title} onDelete={handleDeleteActivity} data-cy="activity-item-delete-button" />
               </div>
             </div>
           </div>
