@@ -29,6 +29,7 @@ export const createActivityGroup = createAsyncThunk("todos/createActivityGroup",
 export const deleteActivityGroup = createAsyncThunk("todos/deleteActivityGroup", async (id) => {
   try {
     const res = await publicRequest.delete(`/activity-groups/${id}`);
+
     return res.data;
   } catch (err) {
     console.error(err.message);
@@ -77,7 +78,7 @@ const todoSlice = createSlice({
       todoEntity.addOne(state, action.payload);
     });
     builder.addCase(deleteActivityGroup.fulfilled, (state, action) => {
-      deleteActivityGroup.removeOne(state, action.payload);
+      todoEntity.removeOne(state, action.payload);
     });
     // builder.addCase(updateProduct.fulfilled, (state, action) => {
     //   productEntity.updateOne(state, { id: action.payload.id, updates: action.payload });

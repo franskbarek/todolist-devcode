@@ -13,7 +13,11 @@ export default {
         primary: {
           100: "#F4F4F4;",
           500: "#16ABF8;",
-          black: "#111111",
+          black: "#111111;",
+          customgray: "#888888;",
+          customgray2: "#4A4A4A;",
+          customwhite: "#F4F4F4;",
+          customorange: "#ED4C5C;",
         },
       },
       fontFamily: {
