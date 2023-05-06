@@ -35,7 +35,7 @@ export default function DashboardEmpty() {
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div data-cy="activity-empty-state" className="flex flex-col items-center justify-center">
       {/* activity-title */}
       <p data-cy="activity-title" className="absolute w-[145px] h-[54px] left-[268px] top-[148px] font-poppins font-bold text-[36px] leading-10 text-primary-black mx-auto text-center">
         Activity

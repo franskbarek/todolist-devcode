@@ -42,7 +42,7 @@ export default function DeleteActivity({ id, onDelete, title }) {
       <Button onClick={handleClickOpen} data-cy="activity-item-delete-button">
         <img src={iconDelete} alt="delete" className="cursor-pointer" />
       </Button>
-      <div className="">
+      <div data-cy="modal-delete-cancel-button">
         {/* Modal delete confirm */}
         <Dialog open={open} onClose={handleClose} data-cy="modal-delete">
           <DialogTitle id="responsive-dialog-title" data-cy="modal-delete-icon">
