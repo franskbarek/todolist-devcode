@@ -43,13 +43,14 @@ export default function DeleteActivity({ id, onDelete, title }) {
         <img src={iconDelete} alt="delete" className="cursor-pointer" />
       </Button>
       <div className="">
-        <Dialog open={open} onClose={handleClose} data-cy="todo-modal-delete">
-          <DialogTitle id="responsive-dialog-title">
+        {/* Modal delete confirm */}
+        <Dialog open={open} onClose={handleClose} data-cy="modal-delete">
+          <DialogTitle id="responsive-dialog-title" data-cy="modal-delete-icon">
             <img src={iconAlert} alt="alert" data-cy="modal-delete-icon" className="" />
           </DialogTitle>
           <DialogContent>
             <DialogContentText className="font-poppins" data-cy="modal-delete-title">
-              Apakah anda yakin menghapus <strong>“{title}”</strong>?
+              Apakah anda yakin menghapus <strong data-cy="modal-delete-title">“{title}”</strong>?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -62,20 +63,19 @@ export default function DeleteActivity({ id, onDelete, title }) {
           </DialogActions>
         </Dialog>
 
-        {succesDelete ? (
-          <Dialog open={succesDelete} onClose={handleCloseSm} data-cy="modal-information" autoFocus className="rounded-lg">
-            <DialogContent>
-              {/* <DialogContentText> */}
-              <div className="flex justify-start items-center">
-                <img src={iconAlertSm} data-cy="modal-information-icon" alt="alertsm" className="mr-2" />
-                <p data-cy="modal-information-title" className="pr-[200px]">
-                  Activity berhasil dihapus
-                </p>
-              </div>
-              {/* </DialogContentText> */}
-            </DialogContent>
-          </Dialog>
-        ) : null}
+        {/* Toast succes delete */}
+        <Dialog open={succesDelete} onClose={handleCloseSm} data-cy="modal-information" autoFocus className="rounded-lg">
+          <DialogContent data-cy="modal-information">
+            {/* <DialogContentText> */}
+            <div className="flex justify-start items-center">
+              <img src={iconAlertSm} data-cy="modal-information-icon" alt="alertsm" className="mr-2" />
+              <p data-cy="modal-information-title" className="pr-[200px]">
+                Activity berhasil dihapus
+              </p>
+            </div>
+            {/* </DialogContentText> */}
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
