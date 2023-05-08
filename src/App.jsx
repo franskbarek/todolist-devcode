@@ -10,7 +10,7 @@ export default function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/itemdetail:id" element={<ItemDetail />} />
+          <Route path="/itemdetail/:id" element={<ItemDetail />} />
         </Routes>
       </BrowserRouter>
     </div>

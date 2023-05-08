@@ -4,13 +4,13 @@ import iconPlus from "../assets/images/icon-plus.svg";
 
 import { CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
-import { createActivityGroup, deleteActivityGroup, getLists, todoSelectors } from "../redux/todoSlice";
+import { createActivityGroup, deleteActivityGroup, getActivityGroupDetail, getLists, todoSelectors } from "../redux/todoSlice";
 
 import DeleteActivity from "../components/DeleteActivity";
 
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function DashboardEmpty() {
   const [addLoading, setAddLoading] = useState(false);
@@ -18,6 +18,8 @@ export default function DashboardEmpty() {
   const lists = useSelector(todoSelectors.selectAll);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const handleCreateActivity = async () => {
     setAddLoading(true);
@@ -28,6 +30,11 @@ export default function DashboardEmpty() {
   const handleDeleteActivity = async (id) => {
     await dispatch(deleteActivityGroup(id));
     dispatch(getLists());
+  };
+
+  const handleGroupDetail = async (groupId) => {
+    await dispatch(getActivityGroupDetail(groupId));
+    navigate(`/itemdetail/${groupId}`);
   };
 
   useEffect(() => {
@@ -59,11 +66,9 @@ export default function DashboardEmpty() {
         {lists.map((activity, idx) => (
           <div key={idx} data-cy="activity-item" className="flex justify-center pt-0 pr-2 pb-0 pl-3">
             <div data-cy="activity-item" className="h-[258px] w-[254px] bg-white rounded-xl shadow-2xl px-8 py-10 mb-8 relative">
-              <Link to={`/itemdetail/${activity.id}`}>
-                <h4 data-cy="activity-item-title" className="text-md font-bold hover:underline">
-                  {activity.title}
-                </h4>
-              </Link>
+              <h4 data-cy="activity-item-title" className="text-md font-bold hover:underline cursor-pointer" onClick={() => handleGroupDetail(activity.id)}>
+                {activity.title}
+              </h4>
               <div className="absolute z-2 bottom-5 bg-white flex justify-between items-center rounded-none w-[200px]">
                 <span data-cy="activity-item-date" className="text-md text-gray-500">
                   {format(new Date(activity.created_at), "EEEE, dd MMMM yyyy", { locale: id })}

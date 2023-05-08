@@ -17,6 +17,15 @@ export const getLists = createAsyncThunk("todos/getLists", async () => {
   }
 });
 
+export const getActivityGroupDetail = createAsyncThunk("todos/getActivityGroupDetail", async (id) => {
+  try {
+    const res = await publicRequest.get(`/activity-groups/${id}`);
+    return res.data;
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 export const createActivityGroup = createAsyncThunk("todos/createActivityGroup", async () => {
   try {
     const res = await publicRequest.post("/activity-groups", { title: "New Activity", email: "frans@gmail.com" });
@@ -29,7 +38,6 @@ export const createActivityGroup = createAsyncThunk("todos/createActivityGroup",
 export const deleteActivityGroup = createAsyncThunk("todos/deleteActivityGroup", async (id) => {
   try {
     const res = await publicRequest.delete(`/activity-groups/${id}`);
-
     return res.data;
   } catch (err) {
     console.error(err.message);
@@ -73,6 +81,9 @@ const todoSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getLists.fulfilled, (state, action) => {
       todoEntity.setAll(state, action.payload);
+    });
+    builder.addCase(getActivityGroupDetail.fulfilled, (state, action) => {
+      todoEntity.setOne(state, action.payload);
     });
     builder.addCase(createActivityGroup.fulfilled, (state, action) => {
       todoEntity.addOne(state, action.payload);
