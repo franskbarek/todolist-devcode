@@ -47,8 +47,6 @@ export default function DashboardEmpty() {
       <p data-cy="activity-title" className="absolute w-[145px] h-[54px] left-[268px] top-[148px] font-poppins font-bold text-[36px] leading-10 text-primary-black mx-auto text-center">
         Activity
       </p>
-      {/* activity-empty-state */}
-      <div data-cy="activity-empty-state">{activityGroups?.length < 1 && <img data-cy="activity-empty-state" className="absolute w-1/8 left-[337px] top-[255px] z-10" src={ImageEmptyActivity} alt="empty-state" />}</div>
 
       {/* start activity-add-button */}
       <div className="flex flex-row justify-center items-center pt-[13px] pr-[21px] pb-[13px] pl-[14px]  gap-1.5" onClick={handleCreateActivity}>
@@ -61,26 +59,33 @@ export default function DashboardEmpty() {
       </div>
       {/* end activity-add-button */}
 
-      {/* start box group activity */}
       <div className="flex justify-center items-center flex-wrap mx-auto w-5/6 mt-[150px]">
-        {activityGroups.map((activity, idx) => (
-          <div key={idx} data-cy="activity-item" className="flex justify-center pt-0 pr-2 pb-0 pl-3">
-            <div className="h-[258px] w-[254px] bg-white rounded-xl shadow-2xl px-8 py-10 mb-8 relative">
-              <h4 data-cy="activity-item-title" className="text-md font-bold hover:underline cursor-pointer" onClick={() => handleGroupDetail(activity.id)}>
-                {activity.title}
-              </h4>
-              <div className="absolute z-2 bottom-5 bg-white flex justify-between items-center rounded-none w-[200px]">
-                <span data-cy="activity-item-date" className="text-md text-gray-500">
-                  {format(new Date(activity.created_at), "dd MMMM yyyy", { locale: id })}
-                </span>
-                {/* Modal box delete confirm */}
-                <DeleteActivity id={activity.id} title={activity.title} onDelete={handleDeleteActivity} />
+        {/* activity-empty-state */}
+        {activityGroups?.length < 1 ? (
+          <img data-cy="activity-empty-state" className="absolute w-1/8 left-[337px] top-[255px] z-10" src={ImageEmptyActivity} alt="empty-state" />
+        ) : (
+          <>
+            {/* start box group activity */}
+            {activityGroups?.map((activity, idx) => (
+              <div key={idx} data-cy="activity-item" className="flex justify-center pt-0 pr-2 pb-0 pl-3">
+                <div className="h-[258px] w-[254px] bg-white rounded-xl shadow-2xl px-8 py-10 mb-8 relative">
+                  <h4 data-cy="activity-item-title" className="text-md font-bold hover:underline cursor-pointer" onClick={() => handleGroupDetail(activity.id)}>
+                    {activity.title}
+                  </h4>
+                  <div className="absolute z-2 bottom-5 bg-white flex justify-between items-center rounded-none w-[200px]">
+                    <span data-cy="activity-item-date" className="text-md text-gray-500">
+                      {format(new Date(activity.created_at), "dd MMMM yyyy", { locale: id })}
+                    </span>
+                    {/* Modal box delete confirm */}
+                    <DeleteActivity id={activity.id} title={activity.title} onDelete={handleDeleteActivity} />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            ))}
+            {/* end box group activity */}
+          </>
+        )}
       </div>
-      {/* end box group activity */}
     </div>
   );
 }
