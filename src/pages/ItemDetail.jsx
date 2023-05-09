@@ -53,6 +53,7 @@ export default function ItemDetail() {
       {showForm ? (
         <>
           <input
+            data-cy="todo-title"
             className="absolute w-[500px] h-[54px] left-[271px] top-[155px] font-poppins font-bold text-[36px] leading-9 text-primary-black mx-auto text-center"
             value={title}
             autoFocus

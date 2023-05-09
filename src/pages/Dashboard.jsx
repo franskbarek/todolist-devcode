@@ -48,7 +48,7 @@ export default function DashboardEmpty() {
         Activity
       </p>
       {/* activity-empty-state */}
-      {activityGroups?.length < 1 && <img data-cy="activity-empty-state" className="absolute w-1/8 left-[337px] top-[255px] z-10" src={ImageEmptyActivity} alt="empty-state" />}
+      <div data-cy="activity-empty-state">{activityGroups?.length < 1 && <img data-cy="activity-empty-state" className="absolute w-1/8 left-[337px] top-[255px] z-10" src={ImageEmptyActivity} alt="empty-state" />}</div>
 
       {/* start activity-add-button */}
       <div className="flex flex-row justify-center items-center pt-[13px] pr-[21px] pb-[13px] pl-[14px]  gap-1.5" onClick={handleCreateActivity}>
