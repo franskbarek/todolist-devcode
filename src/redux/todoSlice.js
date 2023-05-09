@@ -8,7 +8,7 @@ import { publicRequest } from "../utils/apiCalls";
 //   title: "",
 // };
 
-export const getLists = createAsyncThunk("todos/getLists", async () => {
+export const getActivityGroups = createAsyncThunk("todos/getActivityGroups", async () => {
   try {
     const res = await publicRequest.get("/activity-groups?email=frans@gmail.com");
     return res.data.data;
@@ -44,17 +44,17 @@ export const deleteActivityGroup = createAsyncThunk("todos/deleteActivityGroup",
   }
 });
 
-// export const updateProduct = createAsyncThunk("products/updateProduct", async ({ id, title }) => {
-//   try {
-//     const res = await axios.patch(`http://localhost:3000/products/${id}`, {
-//       id: id,
-//       title: title,
-//     });
-//     return res.data;
-//   } catch (err) {
-//     console.error(err.message);
-//   }
-// });
+export const updateActivityTitle = createAsyncThunk("todos/updateActivityTitle", async ({ id, title }) => {
+  try {
+    const res = await publicRequest.patch(`/activity-groups/${id}`, {
+      id: id,
+      title: title,
+    });
+    return res.data;
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
 const todoEntity = createEntityAdapter({
   selectId: (todo) => todo.id,
@@ -79,7 +79,7 @@ const todoSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getLists.fulfilled, (state, action) => {
+    builder.addCase(getActivityGroups.fulfilled, (state, action) => {
       todoEntity.setAll(state, action.payload);
     });
     builder.addCase(getActivityGroupDetail.fulfilled, (state, action) => {
@@ -91,9 +91,9 @@ const todoSlice = createSlice({
     builder.addCase(deleteActivityGroup.fulfilled, (state, action) => {
       todoEntity.removeOne(state, action.payload);
     });
-    // builder.addCase(updateProduct.fulfilled, (state, action) => {
-    //   productEntity.updateOne(state, { id: action.payload.id, updates: action.payload });
-    // });
+    builder.addCase(updateActivityTitle.fulfilled, (state, action) => {
+      todoEntity.updateOne(state, { id: action.payload.id, updates: action.payload });
+    });
   },
 });
 
