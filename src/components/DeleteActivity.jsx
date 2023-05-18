@@ -40,7 +40,7 @@ export default function DeleteActivity({ id, onDelete, title }) {
   };
 
   return (
-    <div className="flex" ref={ref}>
+    <div data-cy="modal-delete" className="flex" ref={ref}>
       <div onClick={handleClickOpen}>
         <img src={iconDelete} alt="delete" className="cursor-pointer ml-10" />
       </div>
@@ -51,12 +51,10 @@ export default function DeleteActivity({ id, onDelete, title }) {
               <img src={iconAlert} alt="alert" data-cy="modal-delete-icon" className="mt-7 mb-0" />
             </div>
 
-            <div className="flex justify-center items-center my-10">
+            <div data-cy="modal-delete-title" className="flex justify-center items-center my-10">
               <p className="font-poppins text-center">
                 Apakah anda yakin menghapus <br />
-                <strong data-cy="modal-delete-title" className="font-poppins">
-                  “{title}” ?
-                </strong>
+                <strong className="font-poppins">“{title}” ?</strong>
               </p>
             </div>
 
@@ -81,9 +79,9 @@ export default function DeleteActivity({ id, onDelete, title }) {
       )}
       <>
         {succesDelete && (
-          <div data-cy="modal-information-icon" className="absolute w-[490px] h-[58px] left-[72vh] top-[50vh] rounded-xl shadow-2xl border-solid border-2 bg-white" onClick={handleCloseSm}>
+          <div data-cy="modal-information" className="absolute w-[490px] h-[58px] left-[72vh] top-[50vh] rounded-xl shadow-2xl border-solid border-2 bg-white" onClick={handleCloseSm}>
             <div className="flex justify-start mt-4 mb-0">
-              <img src={iconAlertSm} alt="alertsm" className="mx-2" />
+              <img data-cy="modal-information-icon" src={iconAlertSm} alt="alertsm" className="mx-2" />
               <p data-cy="modal-information-title" className="font-poppins">
                 Activity berhasil dihapus
               </p>

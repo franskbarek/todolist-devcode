@@ -61,7 +61,7 @@ export default function DashboardEmpty() {
       </div>
       {/* end div for title and button */}
 
-      <div className="flex justify-center items-center flex-wrap">
+      <div data-cy="activity-empty-state" className="flex justify-center items-center flex-wrap">
         {/* activity-empty-state */}
         {activityGroups?.length < 1 ? (
           <img data-cy="activity-empty-state" className="w-1/2 flex justify-center items-center" src={ImageEmptyActivity} alt="empty-state" />
@@ -69,7 +69,7 @@ export default function DashboardEmpty() {
           <>
             {/* start box group activity */}
             {activityGroups?.map((activity, idx) => (
-              <div key={idx} data-cy="activity-item" className="flex justify-center">
+              <div key={idx} data-cy="activity-item-0" className="flex justify-center">
                 <div className="flex flex-col justify-between items-center shadow-xl rounded-xl w-[254px] h-[258px] my-2 mx-2 border-solid border-2 py-2">
                   <h4 data-cy="activity-item-title" className="text-md font-bold hover:underline cursor-pointer" onClick={() => handleGroupDetail(activity.id)}>
                     {activity.title}
@@ -79,7 +79,7 @@ export default function DashboardEmpty() {
                       {format(new Date(activity.created_at), "dd MMMM yyyy", { locale: id })}
                     </div>
                     {/* Modal box delete confirm */}
-                    <DeleteActivity id={activity.id} title={activity.title} onDelete={handleDeleteActivity} />
+                    <DeleteActivity id={activity.id} title={activity.title} onDelete={handleDeleteActivity} data-cy="activity-item-delete-button" />
                   </div>
                 </div>
               </div>
