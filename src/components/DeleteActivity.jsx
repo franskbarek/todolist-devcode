@@ -42,7 +42,7 @@ export default function DeleteActivity({ id, onDelete, title }) {
   return (
     <div data-cy="modal-delete" className="flex" ref={ref}>
       <div onClick={handleClickOpen}>
-        <img src={iconDelete} alt="delete" className="cursor-pointer ml-10" />
+        <img data-cy="activity-item-delete-button" src={iconDelete} alt="delete" className="cursor-pointer ml-10" />
       </div>
       {open && (
         <div onClick={handleClickOpen} className="absolute w-[490px] h-[355px] left-[72vh] top-[35vh] bg-white z-50 rounded-xl shadow-2xl border-solid border-2 py-2">
