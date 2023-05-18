@@ -1,82 +1,96 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
 
 import iconDelete from "../assets/images/icon-delete.svg";
 import iconAlert from "../assets/images/icon-alert.svg";
 import iconAlertSm from "../assets/images/icon-alert-sm.svg";
+import useOutsideClick from "../utils/useOutSideClick";
 
 export default function DeleteActivity({ id, onDelete, title }) {
   const [open, setOpen] = React.useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const [succesDelete, setSuccesDelete] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const ref = React.useRef();
+
+  useOutsideClick(ref, async () => {
+    if (open) {
+      await setOpen(false);
+    }
+    if (succesDelete) {
+      await setSuccesDelete(false);
+    }
+  });
+
+  const handleClickOpen = async () => {
+    await setOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCancel = async () => {
+    await setOpen(false);
   };
 
-  const handleCloseSm = () => {
-    setSuccesDelete(false);
+  const handleCloseSm = async () => {
+    await setSuccesDelete(false);
   };
 
   const handleDelete = async () => {
     await onDelete(id);
-    await handleClose();
+    await handleCancel();
     setSuccesDelete(true);
   };
 
   return (
-    <div>
-      <Button onClick={handleClickOpen} data-cy="activity-item-delete-button">
-        <img src={iconDelete} alt="delete" className="cursor-pointer" />
-      </Button>
-      <div data-cy="modal-delete-cancel-button">
-        {/* Modal delete confirm */}
-        <Dialog open={open} onClose={handleClose} data-cy="modal-delete">
-          <DialogTitle id="responsive-dialog-title" data-cy="modal-delete-icon">
-            <img src={iconAlert} alt="alert" data-cy="modal-delete-icon" className="" />
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText className="font-poppins" data-cy="modal-delete-title">
-              Apakah anda yakin menghapus <strong data-cy="modal-delete-title">“{title}”</strong>?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button data-cy="modal-delete-cancel-button" autoFocus onClick={handleClose}>
-              Batal
-            </Button>
-            <Button className="flex justify-center items-center px-14 py-13 gap-6 absolute w-150 h-54 left-255 top-258 bg-red-500 rounded-full" data-cy="modal-delete-confirm-button" onClick={handleDelete} autoFocus>
-              Hapus
-            </Button>
-          </DialogActions>
-        </Dialog>
+    <div className="flex" ref={ref}>
+      <div onClick={handleClickOpen}>
+        <img src={iconDelete} alt="delete" className="cursor-pointer ml-10" />
+      </div>
+      {open && (
+        <div onClick={handleClickOpen} className="absolute w-[490px] h-[355px] left-[72vh] top-[35vh] bg-white z-50 rounded-xl shadow-2xl border-solid border-2 py-2">
+          <div className="flex flex-col justify-center items-center">
+            <div>
+              <img src={iconAlert} alt="alert" data-cy="modal-delete-icon" className="mt-7 mb-0" />
+            </div>
 
-        {/* Toast succes delete */}
-        <Dialog open={succesDelete} onClose={handleCloseSm} data-cy="modal-information" autoFocus className="rounded-lg">
-          <DialogContent data-cy="modal-information">
-            {/* <DialogContentText> */}
-            <div className="flex justify-start items-center">
-              <img src={iconAlertSm} data-cy="modal-information-icon" alt="alertsm" className="mr-2" />
-              <p data-cy="modal-information-title" className="pr-[200px]">
+            <div className="flex justify-center items-center my-10">
+              <p className="font-poppins text-center">
+                Apakah anda yakin menghapus <br />
+                <strong data-cy="modal-delete-title" className="font-poppins">
+                  “{title}” ?
+                </strong>
+              </p>
+            </div>
+
+            <div className="flex mt-[190px]">
+              <p
+                data-cy="modal-delete-cancel-button"
+                className="flex justify-center items-center px-14 py-13 gap-6 absolute w-[150px] h-[54px] left-[85px] top-[258px] border-solid border-2 py-2 rounded-full cursor-pointer"
+                onClickCapture={handleCancel}
+              >
+                Batal
+              </p>
+              <p
+                data-cy="modal-delete-confirm-button"
+                className="flex justify-center items-center px-14 py-13 gap-5 absolute w-[150px] h-[54px] left-[255px] top-[258px] bg-red-500 rounded-full font-poppins text-white cursor-pointer"
+                onClick={handleDelete}
+              >
+                Hapus
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+      <>
+        {succesDelete && (
+          <div data-cy="modal-information-icon" className="absolute w-[490px] h-[58px] left-[72vh] top-[50vh] rounded-xl shadow-2xl border-solid border-2 bg-white" onClick={handleCloseSm}>
+            <div className="flex justify-start mt-4 mb-0">
+              <img src={iconAlertSm} alt="alertsm" className="mx-2" />
+              <p data-cy="modal-information-title" className="font-poppins">
                 Activity berhasil dihapus
               </p>
             </div>
-            {/* </DialogContentText> */}
-          </DialogContent>
-        </Dialog>
-      </div>
+          </div>
+        )}
+      </>
     </div>
   );
 }

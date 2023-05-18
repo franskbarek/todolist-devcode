@@ -56,6 +56,24 @@ export const updateActivityTitle = createAsyncThunk("todos/updateActivityTitle",
   }
 });
 
+export const getTodoItems = createAsyncThunk("todos/getTodoItems", async (id) => {
+  try {
+    const res = await publicRequest.get(`/todo-items?activity_group_id=${id}`);
+    return res.data.data;
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+export const createTodo = createAsyncThunk("todos/createTodo", async ({ id, title }) => {
+  try {
+    const res = await publicRequest.post("/todo-items", { activity_group_id: id, title: title });
+    return res.data;
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
 const todoEntity = createEntityAdapter({
   selectId: (todo) => todo.id,
 });
@@ -93,6 +111,13 @@ const todoSlice = createSlice({
     });
     builder.addCase(updateActivityTitle.fulfilled, (state, action) => {
       todoEntity.updateOne(state, { id: action.payload.id, updates: action.payload });
+    });
+
+    builder.addCase(getTodoItems.fulfilled, (state, action) => {
+      todoEntity.setAll(state, action.payload);
+    });
+    builder.addCase(createTodo.fulfilled, (state, action) => {
+      todoEntity.addOne(state, action.payload);
     });
   },
 });
